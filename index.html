@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hulk Present | Study Tracker Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); min-height: 100vh; font-family: 'Hind Siliguri', sans-serif; }
+        .glass-card { background: rgba(255, 255, 255, 0.98); border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
+        .input-style { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 12px; outline: none; transition: all 0.3s; }
+        .input-style:focus { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+    <div class="glass-card w-full max-w-lg p-8">
+        <div class="text-center mb-6">
+            <h2 class="text-3xl font-bold text-gray-800 tracking-tight">স্মার্ট স্টাডি রিপোর্ট</h2>
+            <p class="text-indigo-600 font-semibold mt-1">ভবিষ্যতের উজ্জ্বল নক্ষত্রদের জন্য</p>
+            <div class="h-1 w-16 bg-indigo-500 mx-auto mt-3 rounded-full"></div>
+        </div>
+        
+        <form id="studyForm" class="space-y-4">
+            <div>
+                <label class="block text-gray-700 font-bold mb-1">শিক্ষার্থীর নাম</label>
+                <select id="studentSelect" name="student" required class="input-style bg-white">
+                    <option value="" disabled selected>নাম সিলেক্ট করুন</option>
+                    <option value="সিফাত">১. সিফাত</option>
+                    <option value="জোহান">২. জোহান</option>
+                    <option value="আরিয়ান">৩. আরিয়ান</option>
+                    <option value="ছাত্র-৪">৪. ছাত্র-৪</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-bold mb-1">পঠিত বিষয়</label>
+                <select id="subjectSelect" name="subject" required class="input-style bg-white">
+                    <option value="" disabled selected>প্রথমে শিক্ষার্থী সিলেক্ট করুন</option>
+                </select>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-700 font-bold mb-1">সময় (ঘণ্টা)</label>
+                    <input type="number" name="hours" step="0.5" required placeholder="উদা: ২.৫" class="input-style">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-bold mb-1">রিভিশন তারিখ</label>
+                    <input type="date" name="revision" required class="input-style">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-bold mb-1">চিহ্নিত সমস্যা</label>
+                <textarea name="problem" rows="2" placeholder="কোনো সমস্যা থাকলে বিস্তারিত লিখুন..." class="input-style"></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-all transform active:scale-95 shadow-lg">
+                রিপোর্ট সাবমিট করুন
+            </button>
+        </form>
+
+        <div id="statusBox" class="hidden mt-6 p-5 bg-indigo-50 border-2 border-indigo-100 rounded-2xl text-center">
+            <p class="text-indigo-800 font-bold text-lg">সাবমিট সফল হয়েছে! ✅</p>
+            <div class="mt-2 text-sm text-gray-600">
+                আপনার আজকের ইনপুট: <span id="todayTime" class="font-bold text-indigo-600">...</span> ঘণ্টা<br>
+                <p class="mt-1 text-xs text-indigo-500 italic">সাপ্তাহিক রিপোর্টটি শিক্ষক আপনার সাথে শেয়ার করবেন।</p>
+            </div>
+        </div>
+        
+        <p class="text-center text-xs text-gray-400 mt-8 font-mono tracking-wider">Hulk present_Your Tutor</p>
+    </div>
+
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbz0iNpb8YM8vzaN5-dvuRbtSqNz7Eky2NKeRhfsiS-QjbuKINOhhfJ9W2DG_owg6Nom/exec';
+        
+        const subjectsScience = ["বাংলা ১ম", "বাংলা ২য়", "ইংরেজী ১ম", "ইংরেজী ২য়", "গনিত বাউবি", "ফিজিক্স", "ক্যামিস্ট্রি", "বায়োলজি", "হায়ারম্যাথ", "ধর্ম", "আইসিটি"];
+        const subjectsGeneral = ["বাংলা ১ম", "বাংলা ২য়", "ইংরেজী ১ম", "ইংরেজী ২য়", "গনিত বাউবি", "ধর্ম", "আইসিটি"];
+
+        const studentSelect = document.getElementById('studentSelect');
+        const subjectSelect = document.getElementById('subjectSelect');
+
+        // শিক্ষার্থী অনুযায়ী বিষয় পরিবর্তন
+        studentSelect.addEventListener('change', function() {
+            let options = '<option value="" disabled selected>বিষয় সিলেক্ট করুন</option>';
+            // ১ (সিফাত) ও ২ (জোহান) এর জন্য বিজ্ঞান বিভাগ, বাকিদের জন্য সাধারণ
+            let targetSubjects = (this.value === "সিফাত" || this.value === "জোহান") ? subjectsScience : subjectsGeneral;
+            
+            targetSubjects.forEach(sub => {
+                options += `<option value="${sub}">${sub}</option>`;
+            });
+            subjectSelect.innerHTML = options;
+        });
+
+        const form = document.getElementById('studyForm');
+        const btn = document.getElementById('submitBtn');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            btn.disabled = true;
+            btn.innerText = 'ডাটা সেভ হচ্ছে...';
+
+            const formData = new FormData(form);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch(scriptURL, {
+                method: 'POST',
+                mode: 'no-cors',
+                body: JSON.stringify(data)
+            })
+            .then(() => {
+                document.getElementById('statusBox').classList.remove('hidden');
+                document.getElementById('todayTime').innerText = data.hours;
+                form.reset();
+            })
+            .catch(error => alert('ত্রুটি হয়েছে! আবার চেষ্টা করুন।'))
+            .finally(() => {
+                btn.disabled = false;
+                btn.innerText = 'রিপোর্ট সাবমিট করুন';
+            });
+        });
+    </script>
+</body>
+</html>
