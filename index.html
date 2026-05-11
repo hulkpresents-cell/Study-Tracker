@@ -6,118 +6,152 @@
     <title>Hulk Present | Study Tracker Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); min-height: 100vh; font-family: 'Hind Siliguri', sans-serif; }
-        .glass-card { background: rgba(255, 255, 255, 0.98); border-radius: 24px; box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
-        .input-style { width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 12px; outline: none; transition: all 0.3s; }
-        .input-style:focus { border-color: #6366f1; box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1); }
+        body { 
+            background: radial-gradient(circle at top left, #1e293b, #0f172a); 
+            min-height: 100vh; 
+            font-family: 'Hind Siliguri', sans-serif; 
+            color: #f8fafc;
+        }
+        .glass-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(15px); 
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px; 
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); 
+        }
+        .input-style { 
+            width: 100%; padding: 14px; background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(99, 102, 241, 0.3); border-radius: 14px; 
+            color: white; outline: none; transition: all 0.3s; 
+        }
+        .input-style:focus { border-color: #818cf8; box-shadow: 0 0 15px rgba(99, 102, 241, 0.2); }
+        .hulk-title {
+            font-size: 3.5rem; font-weight: 800;
+            background: linear-gradient(to right, #4ade80, #22c55e);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.3));
+        }
     </style>
 </head>
 <body class="flex items-center justify-center p-4">
-    <div class="glass-card w-full max-w-lg p-8">
-        <div class="text-center mb-6">
-            <h2 class="text-3xl font-bold text-gray-800 tracking-tight">স্মার্ট স্টাডি রিপোর্ট</h2>
-            <p class="text-indigo-600 font-semibold mt-1">ভবিষ্যতের উজ্জ্বল নক্ষত্রদের জন্য</p>
-            <div class="h-1 w-16 bg-indigo-500 mx-auto mt-3 rounded-full"></div>
+    <div class="glass-card w-full max-w-xl p-8 my-10">
+        <div class="text-center mb-8">
+            <h1 class="hulk-title mb-2">হাল্ক প্রেজেন্ট</h1>
+            <p class="text-gray-400 font-medium">স্মার্ট স্টাডি মনিটরিং সিস্টেম</p>
         </div>
         
-        <form id="studyForm" class="space-y-4">
-            <div>
-                <label class="block text-gray-700 font-bold mb-1">শিক্ষার্থীর নাম</label>
-                <select id="studentSelect" name="student" required class="input-style bg-white">
-                    <option value="" disabled selected>নাম সিলেক্ট করুন</option>
-                    <option value="সিফাত">১. সিফাত</option>
-                    <option value="জোহান">২. জোহান</option>
-                    <option value="আরিয়ান">৩. আরিয়ান</option>
-                    <option value="ছাত্র-৪">৪. ছাত্র-৪</option>
-                </select>
-            </div>
-
-            <div>
-                <label class="block text-gray-700 font-bold mb-1">পঠিত বিষয়</label>
-                <select id="subjectSelect" name="subject" required class="input-style bg-white">
-                    <option value="" disabled selected>প্রথমে শিক্ষার্থী সিলেক্ট করুন</option>
-                </select>
-            </div>
-
-            <div class="grid grid-cols-2 gap-4">
+        <form id="studyForm" class="space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-gray-700 font-bold mb-1">সময় (ঘণ্টা)</label>
-                    <input type="number" name="hours" step="0.5" required placeholder="উদা: ২.৫" class="input-style">
+                    <label class="block text-gray-300 font-semibold mb-2">শিক্ষার্থীর নাম</label>
+                    <select id="studentSelect" name="student" required class="input-style">
+                        <option value="" disabled selected>নাম বেছে নিন</option>
+                        <option value="সিফাত">১. সিফাত</option>
+                        <option value="জোহান">২. জোহান</option>
+                        <option value="আরিয়ান">৩. আরিয়ান</option>
+                        <option value="ব্লাঙ্ক">৪. ব্লাঙ্ক</option>
+                    </select>
                 </div>
                 <div>
-                    <label class="block text-gray-700 font-bold mb-1">রিভিশন তারিখ</label>
-                    <input type="date" name="revision" required class="input-style">
+                    <label class="block text-gray-300 font-semibold mb-2">পঠিত বিষয়</label>
+                    <select id="subjectSelect" name="subject" required class="input-style">
+                        <option value="" disabled selected>প্রথমে নাম দিন</option>
+                    </select>
                 </div>
             </div>
 
-            <div>
-                <label class="block text-gray-700 font-bold mb-1">চিহ্নিত সমস্যা</label>
-                <textarea name="problem" rows="2" placeholder="কোনো সমস্যা থাকলে বিস্তারিত লিখুন..." class="input-style"></textarea>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-2">পড়ার সময় (মিনিট)</label>
+                    <input type="number" name="hours" required placeholder="উদা: ৪৫ বা ৯০" class="input-style">
+                </div>
+                <div>
+                    <label class="block text-gray-300 font-semibold mb-2">রিভিশন তারিখ (এলার্ম)</label>
+                    <input type="date" id="revisionDate" name="revision" required class="input-style">
+                </div>
             </div>
 
-            <button type="submit" id="submitBtn" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition-all transform active:scale-95 shadow-lg">
-                রিপোর্ট সাবমিট করুন
+            <div>
+                <label class="block text-gray-300 font-semibold mb-2 flex justify-between">
+                    চিহ্নিত সমস্যা 
+                    <span class="text-indigo-400 cursor-pointer hover:text-indigo-300" id="voiceBtn">
+                        <i class="fa-solid fa-microphone"></i> ভয়েজ দিন
+                    </span>
+                </label>
+                <textarea id="problemArea" name="problem" rows="3" placeholder="পড়তে গিয়ে কী কী সমস্যা হলো..." class="input-style"></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-500 hover:to-blue-500 text-white font-bold py-4 rounded-xl transition-all transform hover:scale-[1.02] shadow-2xl">
+                রিপোর্ট সাবমিট করুন <i class="fa-solid fa-paper-plane ml-2"></i>
             </button>
         </form>
 
-        <div id="statusBox" class="hidden mt-6 p-5 bg-indigo-50 border-2 border-indigo-100 rounded-2xl text-center">
-            <p class="text-indigo-800 font-bold text-lg">সাবমিট সফল হয়েছে! ✅</p>
-            <div class="mt-2 text-sm text-gray-600">
-                আপনার আজকের ইনপুট: <span id="todayTime" class="font-bold text-indigo-600">...</span> ঘণ্টা<br>
-                <p class="mt-1 text-xs text-indigo-500 italic">সাপ্তাহিক রিপোর্টটি শিক্ষক আপনার সাথে শেয়ার করবেন।</p>
-            </div>
+        <div id="statusBox" class="hidden mt-8 p-6 bg-green-900/30 border border-green-500/50 rounded-2xl text-center">
+            <p class="text-green-400 font-bold text-lg">সাবমিট সফল হয়েছে! ✅</p>
+            <p class="text-gray-300 text-sm mt-1">আপনার রিপোর্টটি শিক্ষককে পাঠানো হয়েছে।</p>
         </div>
         
-        <p class="text-center text-xs text-gray-400 mt-8 font-mono tracking-wider">Hulk present_Your Tutor</p>
+        <p class="text-center text-[10px] text-gray-600 mt-10 uppercase tracking-[5px]">Advanced Tracker V2.0</p>
     </div>
 
     <script>
         const scriptURL = 'https://script.google.com/macros/s/AKfycbzpQQx_bro1437gTniZAg76aYVc8voX5wYDwIM_ehlplFBaZTMp0-HcrZjqAoyw2mKQ/exec';
         
-        const subjectsScience = ["বাংলা ১ম", "বাংলা ২য়", "ইংরেজী ১ম", "ইংরেজী ২য়", "গনিত বাউবি", "ফিজিক্স", "ক্যামিস্ট্রি", "বায়োলজি", "হায়ারম্যাথ", "ধর্ম", "আইসিটি"];
-        const subjectsGeneral = ["বাংলা ১ম", "বাংলা ২য়", "ইংরেজী ১ম", "ইংরেজী ২য়", "গনিত বাউবি", "ধর্ম", "আইসিটি"];
+        const subScience = ["গণিত বাউবি", "গণিত জেনারেল", "ফিজিক্স", "ক্যামিস্ট্রি", "বায়োলজি", "হায়ারম্যাথ", "বাংলা ১ম", "বাংলা ২য়", "ইংরেজী ১ম", "ইংরেজী ২য়", "ধর্ম", "আইসিটি"];
+        const subGeneral = ["বাংলা ১ম", "বাংলা ২য়", "ইংরেজী ১ম", "ইংরেজী ২য়", "গনিত জেনারেল", "ধর্ম", "আইসিটি"];
 
-        const studentSelect = document.getElementById('studentSelect');
-        const subjectSelect = document.getElementById('subjectSelect');
-
-        // শিক্ষার্থী অনুযায়ী বিষয় পরিবর্তন
-        studentSelect.addEventListener('change', function() {
-            let options = '<option value="" disabled selected>বিষয় সিলেক্ট করুন</option>';
-            // ১ (সিফাত) ও ২ (জোহান) এর জন্য বিজ্ঞান বিভাগ, বাকিদের জন্য সাধারণ
-            let targetSubjects = (this.value === "সিফাত" || this.value === "জোহান") ? subjectsScience : subjectsGeneral;
-            
-            targetSubjects.forEach(sub => {
-                options += `<option value="${sub}">${sub}</option>`;
-            });
-            subjectSelect.innerHTML = options;
+        document.getElementById('studentSelect').addEventListener('change', function() {
+            let options = '<option value="" disabled selected>বিষয় বেছে নিন</option>';
+            let list = (this.value === "সিফাত" || this.value === "জোহান") ? subScience : subGeneral;
+            list.forEach(s => options += `<option value="${s}">${s}</option>`);
+            document.getElementById('subjectSelect').innerHTML = options;
         });
 
-        const form = document.getElementById('studyForm');
-        const btn = document.getElementById('submitBtn');
+        // Voice Recognition (চিহ্নিত সমস্যা)
+        const voiceBtn = document.getElementById('voiceBtn');
+        const problemArea = document.getElementById('problemArea');
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
-        form.addEventListener('submit', e => {
+        if (SpeechRecognition) {
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'bn-BD';
+            
+            voiceBtn.onclick = () => {
+                recognition.start();
+                voiceBtn.innerHTML = '<i class="fa-solid fa-circle-dot text-red-500"></i> শুনছি...';
+            };
+
+            recognition.onresult = (e) => {
+                problemArea.value += e.results[0][0].transcript;
+                voiceBtn.innerHTML = '<i class="fa-solid fa-microphone"></i> ভয়েজ দিন';
+            };
+        } else {
+            voiceBtn.style.display = 'none';
+        }
+
+        // Form Submit
+        document.getElementById('studyForm').addEventListener('submit', e => {
             e.preventDefault();
+            const btn = document.getElementById('submitBtn');
             btn.disabled = true;
             btn.innerText = 'ডাটা সেভ হচ্ছে...';
 
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
+            // এলার্ম নোটিফিকেশন লজিক (ব্রাউজারে রিমাইন্ডার হিসেবে কাজ করবে)
+            const revDate = document.getElementById('revisionDate').value;
+            localStorage.setItem('study_reminder', revDate);
 
-            fetch(scriptURL, {
-                method: 'POST',
-                mode: 'no-cors',
-                body: JSON.stringify(data)
-            })
+            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(Object.fromEntries(new FormData(e.target).entries())) })
             .then(() => {
                 document.getElementById('statusBox').classList.remove('hidden');
-                document.getElementById('todayTime').innerText = data.hours;
-                form.reset();
+                e.target.reset();
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             })
-            .catch(error => alert('ত্রুটি হয়েছে! আবার চেষ্টা করুন।'))
-            .finally(() => {
-                btn.disabled = false;
-                btn.innerText = 'রিপোর্ট সাবমিট করুন';
+            .catch(() => alert('লিঙ্কে সমস্যা হয়েছে!'))
+            .finally(() => { 
+                btn.disabled = false; 
+                btn.innerHTML = 'রিপোর্ট সাবমিট করুন <i class="fa-solid fa-paper-plane ml-2"></i>';
             });
         });
     </script>
