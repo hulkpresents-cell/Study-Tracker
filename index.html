@@ -8,180 +8,152 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { 
-            background: radial-gradient(circle at top left, #070b14, #111827); 
-            min-height: 100vh; font-family: 'Hind Siliguri', sans-serif; color: #f8fafc;
-        }
-        .glass-card { 
-            background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); 
-            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 35px; 
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8); 
-        }
-        .input-style { 
-            width: 100%; padding: 14px; background: rgba(17, 24, 39, 0.9);
-            border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; 
-            color: white; outline: none; transition: all 0.3s; 
-        }
+        body { background: radial-gradient(circle at top left, #070b14, #111827); min-height: 100vh; font-family: 'Hind Siliguri', sans-serif; color: #f8fafc; overflow-x: hidden; }
+        .glass-card { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 35px; box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8); transition: all 0.5s ease; }
+        .input-style { width: 100%; padding: 14px; background: rgba(17, 24, 39, 0.9); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 16px; color: white; outline: none; transition: all 0.3s; }
         .input-style:focus { border-color: #10b981; box-shadow: 0 0 20px rgba(16, 185, 129, 0.15); }
-        .hulk-title {
-            font-size: 4rem; font-weight: 900;
-            background: linear-gradient(to right, #10b981, #34d399);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.3));
-        }
-        .section-label { color: #9ca3af; font-size: 0.85rem; font-weight: 600; margin-left: 5px; margin-bottom: 6px; display: block; }
+        .hulk-title { font-size: 4rem; font-weight: 900; background: linear-gradient(to right, #10b981, #34d399); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 15px rgba(16, 185, 129, 0.3)); }
+        .loader { border: 4px solid #f3f3f3; border-top: 4px solid #10b981; border-radius: 50%; width: 24px; height: 24px; display: inline-block; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="flex items-center justify-center p-4">
-    <div class="glass-card w-full max-w-2xl p-8 md:p-12 my-10 relative">
-        <div class="text-center mb-10">
-            <h1 class="hulk-title mb-1">হাল্ক প্রেজেন্ট</h1>
-            <p class="text-emerald-500 font-bold tracking-[6px] text-xs uppercase">Your Smart Guru</p>
+    <div id="mainContainer" class="glass-card w-full max-w-2xl p-8 md:p-12 my-10 relative">
+        <div id="formContainer">
+            <div class="text-center mb-10">
+                <h1 class="hulk-title mb-1">হাল্ক প্রেজেন্ট</h1>
+                <p class="text-emerald-500 font-bold tracking-[6px] text-xs uppercase">Your Smart Guru</p>
+            </div>
+            
+            <form id="studyForm" class="space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-2 ml-1">শিক্ষার্থীর নাম</label>
+                        <select id="studentSelect" name="student" required class="input-style">
+                            <option value="" disabled selected>নাম বেছে নিন</option>
+                            <option value="সিফাত">১. সিফাত</option>
+                            <option value="জোহান">২. জোহান</option>
+                            <option value="আরিয়ান">৩. আরিয়ান</option>
+                            <option value="UHCT">৪. UHCT</option>
+                            <option value="হাল্ক">৫. হাল্ক (BCS)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-2 ml-1">পঠিত বিষয়</label>
+                        <select id="subjectSelect" name="subject" required class="input-style">
+                            <option value="" disabled selected>প্রথমে নাম দিন</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-2 ml-1">ইউনিট (১-৩০)</label>
+                        <select name="unit" required class="input-style">
+                            <option value="" disabled selected>ইউনিট বেছে নিন</option>
+                            <script>for(let i=1; i<=30; i++) document.write(`<option value="Unit ${i}">ইউনিট ${i}</option>`);</script>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-2 ml-1">সাব-টপিক</label>
+                        <input type="text" id="subtopic" name="subtopic" placeholder="কি পড়েছেন?" class="input-style">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-2 ml-1">পড়ার সময় (মিনিট)</label>
+                        <input type="number" name="hours" required placeholder="উদা: ৯০" class="input-style">
+                    </div>
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-2 ml-1">পরীক্ষায় প্রস্তুত?</label>
+                        <select name="exam_ready" required class="input-style">
+                            <option value="" disabled selected>বাছাই করুন</option>
+                            <option value="হ্যাঁ">হ্যাঁ</option>
+                            <option value="না">না</option>
+                            <option value="পরে দিব">পরে দিব</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-2 ml-1">রিভিশন তারিখ</label>
+                        <input type="date" id="revisionDate" name="revision" required class="input-style">
+                    </div>
+                    <div>
+                        <label class="block text-gray-500 text-xs mb-2 ml-1 flex justify-between">চিহ্নিত সমস্যা <span class="text-emerald-400 cursor-pointer" id="voiceBtn"><i class="fa-solid fa-microphone"></i></span></label>
+                        <textarea id="problemArea" name="problem" rows="1" placeholder="সমস্যা..." class="input-style"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" id="submitBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-5 rounded-2xl transition-all shadow-2xl mt-4">রিপোর্ট সাবমিট করুন</button>
+            </form>
         </div>
-        
-        <form id="studyForm" class="space-y-5">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                    <label class="section-label">শিক্ষার্থীর নাম</label>
-                    <select id="studentSelect" name="student" required class="input-style">
-                        <option value="" disabled selected>নাম বেছে নিন</option>
-                        <option value="সিফাত">১. সিফাত</option>
-                        <option value="জোহান">২. জোহান</option>
-                        <option value="আরিয়ান">৩. আরিয়ান</option>
-                        <option value="UHCT">৪. UHCT</option>
-                        <option value="হাল্ক">৫. হাল্ক (BCS)</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="section-label">পঠিত বিষয়</label>
-                    <select id="subjectSelect" name="subject" required class="input-style">
-                        <option value="" disabled selected>প্রথমে নাম দিন</option>
-                    </select>
-                </div>
-            </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                    <label class="section-label">ইউনিট (১-৩০)</label>
-                    <select name="unit" required class="input-style">
-                        <option value="" disabled selected>ইউনিট বেছে নিন</option>
-                        <script>
-                            for(let i=1; i<=30; i++) {
-                                document.write(`<option value="Unit ${i}">ইউনিট ${i}</option>`);
-                            }
-                        </script>
-                    </select>
-                </div>
-                <div>
-                    <label class="section-label">সাব-টপিক</label>
-                    <input type="text" name="subtopic" placeholder="কি পড়েছেন? উদা: সমাস/গতি" class="input-style">
-                </div>
+        <div id="statusBox" class="hidden text-center py-10 animate-fade-in">
+            <div class="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <i class="fa-solid fa-check text-4xl text-white"></i>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                    <label class="section-label">পড়ার সময় (মিনিট)</label>
-                    <input type="number" name="hours" required placeholder="উদা: ৯০" class="input-style">
-                </div>
-                <div>
-                    <label class="section-label">পরীক্ষায় প্রস্তুত?</label>
-                    <select name="exam_ready" required class="input-style">
-                        <option value="" disabled selected>বাছাই করুন</option>
-                        <option value="হ্যাঁ">হ্যাঁ</option>
-                        <option value="না">না</option>
-                        <option value="পরে দিব">পরে দিব</option>
-                    </select>
-                </div>
+            <h2 class="text-3xl font-bold text-white mb-2">সাবমিট সফল হয়েছে!</h2>
+            <p class="text-emerald-400 font-medium mb-8">আপনার ম্যান্টরের সাথে যোগাযোগ করুন</p>
+            
+            <div class="space-y-4">
+                <button id="calendarBtn" class="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-bold transition-all">
+                    <i class="fa-solid fa-calendar-plus mr-2"></i> রিভিশন এলার্ম সেট করুন
+                </button>
+                <button onclick="location.reload()" class="w-full bg-white/10 hover:bg-white/20 text-white py-3 rounded-xl transition-all">নতুন রিপোর্ট জমা দিন</button>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div>
-                    <label class="section-label">রিভিশন তারিখ</label>
-                    <input type="date" id="revisionDate" name="revision" required class="input-style">
-                </div>
-                <div>
-                    <label class="section-label flex justify-between">
-                        চিহ্নিত সমস্যা 
-                        <span class="text-emerald-400 cursor-pointer text-[11px]" id="voiceBtn">
-                            <i class="fa-solid fa-microphone mr-1"></i> ভয়েজ
-                        </span>
-                    </label>
-                    <textarea id="problemArea" name="problem" rows="1" placeholder="সমস্যা লিখুন..." class="input-style"></textarea>
-                </div>
-            </div>
-
-            <button type="submit" id="submitBtn" class="w-full bg-gradient-to-r from-emerald-600 to-green-500 hover:from-emerald-500 hover:to-green-400 text-white font-bold py-5 rounded-2xl transition-all transform hover:scale-[1.01] shadow-2xl mt-4">
-                রিপোর্ট সাবমিট করুন <i class="fa-solid fa-paper-plane ml-2 text-sm"></i>
-            </button>
-        </form>
-
-        <div id="statusBox" class="hidden mt-10">
-            <div class="bg-emerald-900/20 border border-emerald-500/30 p-10 rounded-3xl text-center">
-                <div class="w-20 h-20 bg-emerald-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-glow">
-                    <i class="fa-solid fa-check text-4xl text-white"></i>
-                </div>
-                <h2 class="text-2xl font-bold text-white mb-2">সাবমিট সফল হয়েছে!</h2>
-                <p class="text-emerald-400 font-medium mb-6">আপনার ম্যান্টরের সাথে যোগাযোগ করুন</p>
-                <button onclick="location.reload()" class="bg-white/10 hover:bg-white/20 px-6 py-2 rounded-full text-xs transition-all">নতুন রিপোর্ট</button>
-            </div>
-        </div>
-        
-        <div class="mt-12 text-center">
-            <p class="text-[10px] text-gray-600 tracking-[4px]">©HULK YOUR SMART GURU</p>
+            <p class="mt-10 text-[10px] text-gray-600 tracking-[4px]">©HULK YOUR SMART GURU</p>
         </div>
     </div>
 
     <script>
-        const scriptURL = 'https://script.google.com/macros/s/AKfycbzpQQx_bro1437gTniZAg76aYVc8voX5wYDwIM_ehlplFBaZTMp0-HcrZjqAoyw2mKQ/exec';
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyZDIZDtyRn6NdN5oOH5YspE3UpM1jsS1sELRYcjTlEstPAWr2FvKiCWDr164UoQ6EgXA/exec';
         
-        const subSci = ["বাউবি", "গণিত জেনারেল", "ফিজিক্স", "ক্যামিস্ট্রি", "বায়োলজি", "হায়ারম্যাথ", "বাংলা ১ম", "বাংলা ২য়", "ইংরেজী ১ম", "ইংরেজী ২য়", "ধর্ম", "আইসিটি"];
+        // Subject lists... (same as before)
+        const subSci = ["গণিত বাউবি", "গণিত জেনারেল", "ফিজিক্স", "ক্যামিস্ট্রি", "বায়োলজি", "হায়ারম্যাথ", "বাংলা ১ম", "বাংলা ২য়", "ইংরেজী ১ম", "ইংরেজী ২য়", "ধর্ম", "আইসিটি"];
         const subGen = ["বাংলা ১ম", "বাংলা ২য়", "ইংরেজী ১ম", "ইংরেজী ২য়", "গনিত জেনারেল", "ধর্ম", "আইসিটি"];
         const subUHCT = ["বাংলা ১ম", "বাংলা ২য়", "ইংরেজী ১ম", "ইংরেজী ২য়", "হায়ার ম্যাথ ১ম", "হায়ার ম্যাথ ২য়", "ফিজিক্স ১ম", "ফিজিক্স ২য়", "ক্যামিস্ট্রি ১ম", "ক্যামিস্ট্রি ২য়", "বোটানি", "জুলজি", "আইসিটি"];
         const subBCS = ["বাংলা ভাষা", "বাংলা সাহিত্য", "ইংরেজি ভাষা", "ইংরেজী সাহিত্য", "বাংলাদেশ বিষয়াবলি", "আন্তর্জাতিক বিষয়াবলি", "ভূগোল, পরিবেশ ও দুর্যোগ", "সাধারণ বিজ্ঞান", "কম্পিউটার ও তথ্য প্রযুক্তি", "গাণিতিক যুক্তি", "মানসিক দক্ষতা", "নৈতিকতা, মূল্যবোধ ও সুশাসন"];
 
         document.getElementById('studentSelect').addEventListener('change', function() {
+            let list = (this.value === "সিফাত" || this.value === "জোহান") ? subSci : (this.value === "UHCT") ? subUHCT : (this.value === "হাল্ক") ? subBCS : subGen;
             let options = '<option value="" disabled selected>বিষয় বেছে নিন</option>';
-            let list = (this.value === "সিফাত" || this.value === "জোহান") ? subSci : 
-                       (this.value === "UHCT") ? subUHCT : 
-                       (this.value === "হাল্ক") ? subBCS : subGen;
             list.forEach(s => options += `<option value="${s}">${s}</option>`);
             document.getElementById('subjectSelect').innerHTML = options;
         });
 
-        // Voice to Text
-        const voiceBtn = document.getElementById('voiceBtn');
-        const problemArea = document.getElementById('problemArea');
-        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-
-        if (SpeechRecognition) {
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'bn-BD';
-            voiceBtn.onclick = () => {
-                recognition.start();
-                voiceBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> শুনছি...';
-            };
-            recognition.onresult = (e) => {
-                problemArea.value += e.results[0][0].transcript + ' ';
-                voiceBtn.innerHTML = '<i class="fa-solid fa-microphone mr-1"></i> ভয়েজ';
-            };
-        }
-
-        // Form Submit
         document.getElementById('studyForm').addEventListener('submit', e => {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
             btn.disabled = true;
-            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin mr-2"></i> পাঠানো হচ্ছে...';
+            btn.innerHTML = '<span class="loader"></span> পাঠানো হচ্ছে...';
 
-            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(Object.fromEntries(new FormData(e.target).entries())) })
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData.entries());
+
+            fetch(scriptURL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) })
             .then(() => {
-                document.getElementById('studyForm').classList.add('hidden');
+                document.getElementById('formContainer').classList.add('hidden');
                 document.getElementById('statusBox').classList.remove('hidden');
-                alert('রিপোর্ট পাঠানো হয়েছে। রিভিশন তারিখটি মনে রাখুন!');
+                
+                // ক্যালেন্ডার বাটন সেটআপ
+                document.getElementById('calendarBtn').onclick = () => {
+                    const date = data.revision.replace(/-/g, '');
+                    const title = `Revision: ${data.subject} (${data.subtopic})`;
+                    const url = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${date}/${date}&details=Study Tracker Reminder`;
+                    window.open(url, '_blank');
+                };
             })
-            .catch(() => alert('ত্রুটি হয়েছে!'))
-            .finally(() => btn.disabled = false);
+            .catch(() => alert('ত্রুটি হয়েছে!'));
         });
+        
+        // Voice to Text logic (simplified)
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'bn-BD';
+        document.getElementById('voiceBtn').onclick = () => recognition.start();
+        recognition.onresult = (e) => document.getElementById('problemArea').value += e.results[0][0].transcript;
     </script>
 </body>
 </html>
